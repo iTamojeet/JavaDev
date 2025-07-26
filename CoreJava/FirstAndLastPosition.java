@@ -15,7 +15,7 @@ class FirstAndLastPosition{
         return ans;
     }
 
-    // this function just return the inedx value of target
+    // this function just return the index value of target
     static int search(int[] nums, int target, boolean findStartIndex){
 
         int ans = -1;
