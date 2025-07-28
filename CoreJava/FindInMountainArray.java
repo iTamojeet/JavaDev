@@ -1,6 +1,6 @@
 import java.util.*;
 
-class MountainArray{
+class FindInMountainArray{
 
     static int search(int[] arr, int target){
         int peak = peakIndexInMountainArray(arr);
