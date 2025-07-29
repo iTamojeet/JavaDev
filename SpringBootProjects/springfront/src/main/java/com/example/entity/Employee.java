@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-    private String name;
-    private Integer salary;
+    private Integer empno;
+    private String ename;
+    private Integer sal;
     private String job;
 
 }
