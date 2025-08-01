@@ -107,6 +107,13 @@ curl http://localhost:8080/actuator/health
 curl -X POST http://localhost:8080/actuator/shutdown
 ```
 
+### Outout/Response
+
+Something like this should appear on your terminal or response body.
+```json
+{"message":"Shutting down, bye..."}
+```
+
 ## ⚙️ Configuration
 
 The application configuration is located in `src/main/resources/application.properties`:
