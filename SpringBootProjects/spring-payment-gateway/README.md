@@ -56,20 +56,67 @@ cd spring-payment-gateway
 
 ### 2. Database Setup
 
+#### Option 1: Local Oracle Database Installation
+
 1. Install Oracle Database (XE recommended for development)
 2. Create a user with the following credentials:
-   - Username: `scott`
+   - Username: `c##scott`
    - Password: `tiger`
    - Database: `xe`
    - Port: `1521`
+
+#### Option 2: Oracle Database with Docker (Recommended for Mac)
+
+1. Install Docker Desktop for Mac from [https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)
+
+2. Pull and run Oracle Database container:
+```bash
+# Pull the official Oracle Database image
+docker pull container-registry.oracle.com/database/express:latest
+
+# Run Oracle Database container
+docker run -d --name oracle-db \
+  -p 1521:1521 \
+  -e ORACLE_PWD=tiger \
+  -e ORACLE_CHARACTERSET=AL32UTF8 \
+  container-registry.oracle.com/database/express:latest
+
+# Wait for the database to start (this may take 5-10 minutes)
+docker logs -f oracle-db
+```
+
+3. Connect to Oracle Database and create user:
+```bash
+# Connect to the running container
+docker exec -it oracle-db sqlplus sys/tiger@//localhost:1521/XE as sysdba
+
+# Create a new user
+CREATE USER c##scott IDENTIFIED BY tiger;
+GRANT CONNECT, RESOURCE, DBA TO c##scott;
+```
 
 ### 3. Configure Database Connection
 
 The database configuration is in `src/main/java/payment/gateway/config/OracleConfig.java`. Update the connection properties if needed:
 
+#### For Windows:
 ```java
 properties.put(Environment.JAKARTA_JDBC_URL, "jdbc:oracle:thin:@localhost:1521:xe");
-properties.put(Environment.JAKARTA_JDBC_USER, "scott");
+properties.put(Environment.JAKARTA_JDBC_USER, "c##scott");
+properties.put(Environment.JAKARTA_JDBC_PASSWORD, "tiger");
+```
+
+#### For Mac:
+```java
+properties.put(Environment.JAKARTA_JDBC_URL, "jdbc:oracle:thin:@//localhost:1521/XEPDB1");
+properties.put(Environment.JAKARTA_JDBC_USER, "c##scott");
+properties.put(Environment.JAKARTA_JDBC_PASSWORD, "tiger");
+```
+
+#### Using Docker (Recommended for Mac):
+```java
+properties.put(Environment.JAKARTA_JDBC_URL, "jdbc:oracle:thin:@//localhost:1521/XE");
+properties.put(Environment.JAKARTA_JDBC_USER, "c##scott");
 properties.put(Environment.JAKARTA_JDBC_PASSWORD, "tiger");
 ```
 
@@ -218,6 +265,30 @@ For support and questions:
 - [ ] User authentication
 - [ ] Payment analytics
 - [ ] Multi-currency support
+
+## 🐳 Useful Docker Commands
+
+If you're using Docker for Oracle Database, here are some helpful commands:
+
+```bash
+# Check if Oracle container is running
+docker ps
+
+# Stop the Oracle container
+docker stop oracle-db
+
+# Start the Oracle container
+docker start oracle-db
+
+# Remove the Oracle container
+docker rm oracle-db
+
+# View container logs
+docker logs oracle-db
+
+# Access SQLPlus directly
+docker exec -it oracle-db sqlplus c##scott/tiger@//localhost:1521/XE
+```
 
 ---
 
