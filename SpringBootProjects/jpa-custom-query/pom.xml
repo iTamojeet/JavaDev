@@ -1,54 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Maven Project Object Model (POM) for JPA Custom Query Demo Application
+    
+    This project demonstrates various Spring Data JPA query methods including:
+    - Method name-based queries using Spring Data JPA naming conventions
+    - Custom JPQL queries using @Query annotation
+    - Different types of database operations and search patterns
+    
+    Dependencies include:
+    - Spring Boot Starter Data JPA for database operations
+    - Spring Boot Starter Web for REST API endpoints
+    - Oracle JDBC driver for database connectivity
+    - Lombok for reducing boilerplate code
+    - Spring Boot Starter Test for unit testing
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Parent POM providing Spring Boot dependency management and plugin configuration -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.5.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+    
+    <!-- Project coordinates and metadata -->
     <groupId>test</groupId>
     <artifactId>jpa-custom-query</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>jpa-custom-query</name>
     <description>jpa-custom-query</description>
     <url/>
+    
+    <!-- License information -->
     <licenses>
         <license/>
     </licenses>
+    
+    <!-- Developer information -->
     <developers>
         <developer/>
     </developers>
+    
+    <!-- Source control management -->
     <scm>
         <connection/>
         <developerConnection/>
         <tag/>
         <url/>
     </scm>
+    
+    <!-- Project properties -->
     <properties>
+        <!-- Java version for compilation and runtime -->
         <java.version>21</java.version>
     </properties>
+    
+    <!-- Project dependencies -->
     <dependencies>
+        <!-- Spring Boot Starter Data JPA for JPA/Hibernate support -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        
+        <!-- Spring Boot Starter Web for REST API support -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- Oracle JDBC driver for database connectivity -->
         <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
             <artifactId>ojdbc11</artifactId>
             <scope>runtime</scope>
         </dependency>
+        
+        <!-- Lombok for reducing boilerplate code (constructors, getters, setters, etc.) -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+        
+        <!-- Spring Boot Starter Test for unit testing support -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -56,12 +94,15 @@
         </dependency>
     </dependencies>
 
+    <!-- Build configuration -->
     <build>
         <plugins>
+            <!-- Maven Compiler Plugin configuration -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
+                    <!-- Configure annotation processor for Lombok -->
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>
@@ -70,10 +111,13 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
+            
+            <!-- Spring Boot Maven Plugin for creating executable JAR -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <!-- Exclude Lombok from the final JAR as it's only needed at compile time -->
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
