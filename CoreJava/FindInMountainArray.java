@@ -12,28 +12,6 @@ class FindInMountainArray{
         return orderAgnosticBinarySearch(arr, target, peak+1, arr.length-1);
     }
 
-    static int peakIndexInMountainArray(int[] arr){
-        int start = 0;
-        int end = arr.length - 1;
-
-        while(start < end){
-            int mid = start + (end - start)/2;
-            if(arr[mid] > arr[mid+1]){
-                /* We are in the descending part of the array
-                this might be hte answer, but to confirm 
-                look at the left
-                this is why end != mid - 1;
-                */
-               end = mid;
-            }
-            else{
-                // we r in the ascending part of the array
-                start = mid + 1; // because we know mid + 1 element > mid element
-            }
-        }
-        return start; // or return end as both are same... :)
-    }
-
     static int orderAgnosticBinarySearch(int[] arr, int target, int start, int end){
 
         boolean isAsc = arr[start]<arr[end];
@@ -59,6 +37,28 @@ class FindInMountainArray{
             }
         }
         return -1;
+    }
+
+    static int peakIndexInMountainArray(int[] arr){
+        int start = 0;
+        int end = arr.length - 1;
+
+        while(start < end){
+            int mid = start + (end - start)/2;
+            if(arr[mid] > arr[mid+1]){
+                /* We are in the descending part of the array
+                this might be hte answer, but to confirm 
+                look at the left
+                this is why end != mid - 1;
+                */
+               end = mid;
+            }
+            else{
+                // we r in the ascending part of the array
+                start = mid + 1; // because we know mid + 1 element > mid element
+            }
+        }
+        return start; // or return end as both are same... :)
     }
 
     public static void main(String []args){
