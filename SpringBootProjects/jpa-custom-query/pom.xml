@@ -72,6 +72,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- Spring Boot Starter Validation for input validation -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
         <!-- Oracle JDBC driver for database connectivity -->
         <dependency>
             <groupId>com.oracle.database.jdbc</groupId>

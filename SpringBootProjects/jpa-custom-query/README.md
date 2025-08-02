@@ -1,6 +1,6 @@
 # JPA Custom Query Demo Application
 
-A comprehensive Spring Boot application demonstrating various JPA (Java Persistence API) query methods and patterns using Spring Data JPA. This project showcases different approaches to database querying including method name-based queries, custom JPQL queries, and various search patterns.
+A comprehensive Spring Boot application demonstrating various JPA (Java Persistence API) query methods and patterns using Spring Data JPA. This project showcases different approaches to database querying including method name-based queries, custom JPQL queries, and various search patterns with robust error handling and input validation.
 
 ## 🚀 Features
 
@@ -17,20 +17,30 @@ A comprehensive Spring Boot application demonstrating various JPA (Java Persiste
 - **POST** operations for complex search scenarios
 - Support for path variables, request parameters, and request bodies
 - Comprehensive product search and retrieval operations
+- **Proper HTTP Status Codes**: 200, 400, 404 responses
+- **Input Validation**: Request parameter validation
+- **Error Handling**: Global exception handling with detailed error messages
+
+### Enhanced Features
+- **Input Validation**: Bean validation with custom error messages
+- **Error Handling**: Global exception handler with consistent error responses
+- **CORS Support**: Cross-origin resource sharing enabled
+- **ResponseEntity**: Proper HTTP response handling
+- **Parameter Validation**: Null checks and business logic validation
 
 ## 🏗️ Architecture
 
-The application follows a standard layered architecture:
+The application follows a standard layered architecture with enhanced error handling:
 
 ```
 ┌─────────────────┐
-│   Controller    │ ← REST API endpoints
+│   Controller    │ ← REST API endpoints with validation
 ├─────────────────┤
 │    Service      │ ← Business logic layer
 ├─────────────────┤
 │   Repository    │ ← Data access layer
 ├─────────────────┤
-│   Entity        │ ← Database mapping
+│   Entity        │ ← Database mapping with validation
 └─────────────────┘
 ```
 
@@ -38,6 +48,7 @@ The application follows a standard layered architecture:
 - **Java 21**: Latest LTS version
 - **Spring Boot 3.5.4**: Application framework
 - **Spring Data JPA**: Data access layer
+- **Spring Boot Validation**: Input validation support
 - **Hibernate**: JPA implementation
 - **Oracle Database**: Primary database
 - **Lombok**: Boilerplate code reduction
@@ -94,48 +105,65 @@ The application will start on `http://localhost:8888`
 http://localhost:8888/products
 ```
 
+### Response Format
+All endpoints return `ResponseEntity` with appropriate HTTP status codes:
+- **200 OK**: Successful operation
+- **400 Bad Request**: Invalid input parameters
+- **404 Not Found**: Resource not found
+- **500 Internal Server Error**: Unexpected server error
+
+### Error Response Format
+```json
+{
+  "timestamp": "2024-12-19T10:30:00",
+  "message": "Error description",
+  "details": "Detailed error information",
+  "path": "/products/search/contains"
+}
+```
+
 ### Available Endpoints
 
 #### Basic Operations
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/products` | Get all products |
+| Method | Endpoint | Description | Status Codes |
+|--------|----------|-------------|--------------|
+| GET | `/products` | Get all products | 200 |
 
 #### Search by Name
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/products/name/{name}` | Get product by exact name |
-| GET | `/products/search/contains?keyword={keyword}` | Search products containing keyword |
-| GET | `/products/search/starts?prefix={prefix}` | Search products starting with prefix |
-| GET | `/products/search/ends?suffix={suffix}` | Search products ending with suffix |
-| GET | `/products/search/ignore-case?name={name}` | Case-insensitive name search |
+| Method | Endpoint | Description | Status Codes |
+|--------|----------|-------------|--------------|
+| GET | `/products/name/{name}` | Get product by exact name | 200, 404 |
+| GET | `/products/search/contains?keyword={keyword}` | Search products containing keyword | 200, 400 |
+| GET | `/products/search/starts?prefix={prefix}` | Search products starting with prefix | 200, 400 |
+| GET | `/products/search/ends?suffix={suffix}` | Search products ending with suffix | 200, 400 |
+| GET | `/products/search/ignore-case?name={name}` | Case-insensitive name search | 200, 400 |
 
 #### Search by Price
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/products/price?price={price}` | Get products with exact price |
-| GET | `/products/price/greater?price={price}` | Get products with price greater than |
-| GET | `/products/price/less?price={price}` | Get products with price less than |
-| GET | `/products/price/between?min={min}&max={max}` | Get products within price range |
+| Method | Endpoint | Description | Status Codes |
+|--------|----------|-------------|--------------|
+| GET | `/products/price?price={price}` | Get products with exact price | 200 |
+| GET | `/products/price/greater?price={price}` | Get products with price greater than | 200 |
+| GET | `/products/price/less?price={price}` | Get products with price less than | 200 |
+| GET | `/products/price/between?min={min}&max={max}` | Get products within price range | 200, 400 |
 
 #### Combined Search
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/products/name-price?name={name}&price={price}` | Get product by name and price |
-| GET | `/products/search/contains-price?name={name}&price={price}` | Search by name containing and price greater |
-| POST | `/products/search/names-in-price-range?min={min}&max={max}` | Search by names list and price range |
+| Method | Endpoint | Description | Status Codes |
+|--------|----------|-------------|--------------|
+| GET | `/products/name-price?name={name}&price={price}` | Get product by name and price | 200, 404 |
+| GET | `/products/search/contains-price?name={name}&price={price}` | Search by name containing and price greater | 200, 400 |
+| POST | `/products/search/names-in-price-range?min={min}&max={max}` | Search by names list and price range | 200, 400 |
 
 #### Sorting Operations
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/products/sort/asc` | Get all products sorted by price (ascending) |
-| GET | `/products/sort/desc` | Get all products sorted by price (descending) |
-| GET | `/products/search/contains-sort-asc?keyword={keyword}` | Search by name containing and sort by price (ascending) |
+| Method | Endpoint | Description | Status Codes |
+|--------|----------|-------------|--------------|
+| GET | `/products/sort/asc` | Get all products sorted by price (ascending) | 200 |
+| GET | `/products/sort/desc` | Get all products sorted by price (descending) | 200 |
+| GET | `/products/search/contains-sort-asc?keyword={keyword}` | Search by name containing and sort by price (ascending) | 200, 400 |
 
 #### Custom Queries
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/products/custom/price-range?minPrice={min}&maxPrice={max}` | Custom JPQL query for price range |
+| Method | Endpoint | Description | Status Codes |
+|--------|----------|-------------|--------------|
+| GET | `/products/custom/price-range?minPrice={min}&maxPrice={max}` | Custom JPQL query for price range | 200, 400 |
 
 ## 💾 Database Schema
 
@@ -143,8 +171,8 @@ http://localhost:8888/products
 ```sql
 CREATE TABLE products (
     id INTEGER PRIMARY KEY,
-    name VARCHAR2(255),
-    price NUMBER(10,2)
+    name VARCHAR2(255) NOT NULL,
+    price NUMBER(10,2) NOT NULL CHECK (price > 0)
 );
 ```
 
@@ -208,10 +236,23 @@ curl -X POST "http://localhost:8888/products/search/names-in-price-range?min=100
      -d '["Laptop", "Smartphone", "Tablet"]'
 ```
 
+#### Error handling examples
+```bash
+# Invalid price range (min > max)
+curl -X GET "http://localhost:8888/products/price/between?min=500&max=100"
+
+# Empty keyword
+curl -X GET "http://localhost:8888/products/search/contains?keyword="
+
+# Product not found
+curl -X GET "http://localhost:8888/products/name/NonExistentProduct"
+```
+
 ### Using Postman
 1. Import the collection (if available)
 2. Set base URL to `http://localhost:8888`
 3. Test different endpoints with various parameters
+4. Check response status codes and error messages
 
 ## 🔧 Configuration
 
@@ -231,6 +272,9 @@ spring.datasource.password=tiger
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
 spring.jpa.hibernate.ddl-auto=update
+
+# Validation configuration
+spring.jpa.properties.hibernate.validator.apply_to_ddl=false
 ```
 
 ### DDL Auto Options
@@ -248,7 +292,8 @@ src/
 │   │       └── example/
 │   │           ├── JpaCustomQueryApplication.java
 │   │           ├── controller/
-│   │           │   └── ProductController.java
+│   │           │   ├── ProductController.java
+│   │           │   └── GlobalExceptionHandler.java
 │   │           ├── entity/
 │   │           │   └── Product.java
 │   │           ├── repository/
@@ -298,6 +343,29 @@ Monitor application logs for:
 - HTTP request/response details
 - Database connection status
 - Application startup information
+- Validation errors
+- Exception handling
+
+### Error Monitoring
+The application includes comprehensive error handling:
+- Global exception handler for consistent error responses
+- Input validation with detailed error messages
+- HTTP status code mapping for different error scenarios
+- Timestamp and request path information in error responses
+
+## 🔒 Security Considerations
+
+### Input Validation
+- All request parameters are validated
+- Bean validation annotations on entity fields
+- Custom validation logic in controller methods
+- Null checks and business rule validation
+
+### Error Handling
+- No sensitive information exposed in error messages
+- Consistent error response format
+- Proper HTTP status codes
+- Detailed logging for debugging
 
 ## 🤝 Contributing
 
@@ -306,6 +374,14 @@ Monitor application logs for:
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+### Code Quality Guidelines
+- Follow Java coding conventions
+- Add comprehensive JavaDoc comments
+- Include unit tests for new features
+- Validate input parameters
+- Handle exceptions appropriately
+- Use proper HTTP status codes
 
 ## 📝 License
 
@@ -319,6 +395,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - Spring Boot team for the excellent framework
 - Spring Data JPA for simplified data access
+- Spring Boot Validation for input validation support
 - Oracle for the database technology
 - Lombok for reducing boilerplate code
 
@@ -331,4 +408,4 @@ For support and questions:
 
 ---
 
-**Note**: This application is designed for educational purposes and demonstrates various JPA query patterns. For production use, consider implementing proper security, validation, and error handling. 
+**Note**: This application is designed for educational purposes and demonstrates various JPA query patterns with robust error handling and input validation. For production use, consider implementing additional security measures, comprehensive testing, and monitoring solutions. 
