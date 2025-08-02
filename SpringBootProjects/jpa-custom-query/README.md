@@ -24,6 +24,7 @@ A comprehensive Spring Boot application demonstrating various JPA (Java Persiste
 ### Enhanced Features
 - **Input Validation**: Bean validation with custom error messages
 - **Error Handling**: Global exception handler with consistent error responses
+- **Specific Exceptions**: Custom exception types for different error scenarios
 - **CORS Support**: Cross-origin resource sharing enabled
 - **ResponseEntity**: Proper HTTP response handling
 - **Parameter Validation**: Null checks and business logic validation
@@ -118,9 +119,19 @@ All endpoints return `ResponseEntity` with appropriate HTTP status codes:
   "timestamp": "2024-12-19T10:30:00",
   "message": "Error description",
   "details": "Detailed error information",
-  "path": "/products/search/contains"
+  "path": "/products/search/contains",
+  "errorType": "ProductNotFoundException"
 }
 ```
+
+### Exception Types
+The application includes specific exception types for different error scenarios:
+
+- **ProductNotFoundException**: When a product is not found (404)
+- **InvalidInputException**: When input parameters are invalid (400)
+- **DatabaseOperationException**: When database operations fail (500)
+- **IllegalArgumentException**: For invalid arguments (400)
+- **NullPointerException**: For missing required parameters (400)
 
 ### Available Endpoints
 
@@ -292,10 +303,14 @@ src/
 │   │       └── example/
 │   │           ├── JpaCustomQueryApplication.java
 │   │           ├── controller/
-│   │           │   ├── ProductController.java
-│   │           │   └── GlobalExceptionHandler.java
+│   │           │   └── ProductController.java
 │   │           ├── entity/
 │   │           │   └── Product.java
+│   │           ├── exception/
+│   │           │   ├── GlobalExceptionHandler.java
+│   │           │   ├── ProductNotFoundException.java
+│   │           │   ├── InvalidInputException.java
+│   │           │   └── DatabaseOperationException.java
 │   │           ├── repository/
 │   │           │   └── ProductRepository.java
 │   │           └── service/

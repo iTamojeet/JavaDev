@@ -3,7 +3,6 @@ package com.example.controller;
 import com.example.entity.Product;
 import com.example.service.ProductService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,9 +58,6 @@ public class ProductController {
     @GetMapping("/name/{name}")
     public ResponseEntity<Product> getProductByName(@PathVariable String name) {
         Product product = productService.getAProductByName(name);
-        if (product == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(product);
     }
 
@@ -77,9 +73,6 @@ public class ProductController {
             @RequestParam String name,
             @RequestParam Double price) {
         Product product = productService.findByNameAndPrice(name, price);
-        if (product == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(product);
     }
 
@@ -130,9 +123,6 @@ public class ProductController {
     public ResponseEntity<List<Product>> getByPriceBetween(
             @RequestParam Double min,
             @RequestParam Double max) {
-        if (min > max) {
-            return ResponseEntity.badRequest().build();
-        }
         List<Product> products = productService.findByPriceBetween(min, max);
         return ResponseEntity.ok(products);
     }
@@ -145,9 +135,6 @@ public class ProductController {
      */
     @GetMapping("/search/contains")
     public ResponseEntity<List<Product>> getByNameContaining(@RequestParam String keyword) {
-        if (keyword == null || keyword.trim().isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
         List<Product> products = productService.findByNameContaining(keyword);
         return ResponseEntity.ok(products);
     }
@@ -160,9 +147,6 @@ public class ProductController {
      */
     @GetMapping("/search/starts")
     public ResponseEntity<List<Product>> getByNameStartingWith(@RequestParam String prefix) {
-        if (prefix == null || prefix.trim().isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
         List<Product> products = productService.findByNameStartingWith(prefix);
         return ResponseEntity.ok(products);
     }
@@ -175,9 +159,6 @@ public class ProductController {
      */
     @GetMapping("/search/ends")
     public ResponseEntity<List<Product>> getByNameEndingWith(@RequestParam String suffix) {
-        if (suffix == null || suffix.trim().isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
         List<Product> products = productService.findByNameEndingWith(suffix);
         return ResponseEntity.ok(products);
     }
@@ -193,9 +174,6 @@ public class ProductController {
     public ResponseEntity<List<Product>> getByNameContainingAndPriceGreaterThan(
             @RequestParam String name,
             @RequestParam Double price) {
-        if (name == null || name.trim().isEmpty() || price == null || price < 0) {
-            return ResponseEntity.badRequest().build();
-        }
         List<Product> products = productService.findByNameContainingAndPriceGreaterThan(name, price);
         return ResponseEntity.ok(products);
     }
@@ -214,9 +192,6 @@ public class ProductController {
             @RequestBody List<String> names,
             @RequestParam Double min,
             @RequestParam Double max) {
-        if (names == null || names.isEmpty() || min > max) {
-            return ResponseEntity.badRequest().build();
-        }
         List<Product> products = productService.findByNameInAndPriceBetween(names, min, max);
         return ResponseEntity.ok(products);
     }
@@ -229,9 +204,6 @@ public class ProductController {
      */
     @GetMapping("/search/ignore-case")
     public ResponseEntity<List<Product>> getByNameIgnoreCase(@RequestParam String name) {
-        if (name == null || name.trim().isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
         List<Product> products = productService.findByNameIgnoreCase(name);
         return ResponseEntity.ok(products);
     }
@@ -266,9 +238,6 @@ public class ProductController {
      */
     @GetMapping("/search/contains-sort-asc")
     public ResponseEntity<List<Product>> getByNameContainingSortedByPriceAsc(@RequestParam String keyword) {
-        if (keyword == null || keyword.trim().isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
         List<Product> products = productService.findByNameContainingOrderByPriceAsc(keyword);
         return ResponseEntity.ok(products);
     }
@@ -284,9 +253,6 @@ public class ProductController {
     public ResponseEntity<List<Product>> searchByPriceRange(
             @RequestParam Double minPrice,
             @RequestParam Double maxPrice) {
-        if (minPrice > maxPrice) {
-            return ResponseEntity.badRequest().build();
-        }
         List<Product> products = productService.searchByPriceRange(minPrice, maxPrice);
         return ResponseEntity.ok(products);
     }

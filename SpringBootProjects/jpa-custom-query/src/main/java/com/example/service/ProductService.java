@@ -1,6 +1,9 @@
 package com.example.service;
 
 import com.example.entity.Product;
+import com.example.exception.DatabaseOperationException;
+import com.example.exception.InvalidInputException;
+import com.example.exception.ProductNotFoundException;
 import com.example.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,19 +36,41 @@ public class ProductService {
      * Retrieves all products from the database.
      * 
      * @return List of all products in the system
+     * @throws DatabaseOperationException if database operation fails
      */
     public List<Product> getAll(){
-        return productRepository.findAll();
+        try {
+            return productRepository.findAll();
+        } catch (Exception e) {
+            throw DatabaseOperationException.forQueryFailure("getAll", e);
+        }
     }
 
     /**
      * Retrieves a product by its exact name.
      * 
      * @param name The exact name of the product to find
-     * @return Product with the specified name, or null if not found
+     * @return Product with the specified name
+     * @throws ProductNotFoundException if product is not found
+     * @throws InvalidInputException if name is null or empty
+     * @throws DatabaseOperationException if database operation fails
      */
     public Product getAProductByName(String name){
-        return productRepository.findByName(name);
+        if (name == null || name.trim().isEmpty()) {
+            throw InvalidInputException.forEmptyParameter("name");
+        }
+        
+        try {
+            Product product = productRepository.findByName(name);
+            if (product == null) {
+                throw ProductNotFoundException.forName(name);
+            }
+            return product;
+        } catch (ProductNotFoundException | InvalidInputException e) {
+            throw e;
+        } catch (Exception e) {
+            throw DatabaseOperationException.forQueryFailure("findByName", e);
+        }
     }
 
     /**
@@ -53,10 +78,30 @@ public class ProductService {
      * 
      * @param name The exact name of the product
      * @param price The exact price of the product
-     * @return Product matching both name and price, or null if not found
+     * @return Product matching both name and price
+     * @throws ProductNotFoundException if product is not found
+     * @throws InvalidInputException if parameters are invalid
+     * @throws DatabaseOperationException if database operation fails
      */
     public Product findByNameAndPrice(String name, Double price){
-        return productRepository.findByNameAndPrice(name, price);
+        if (name == null || name.trim().isEmpty()) {
+            throw InvalidInputException.forEmptyParameter("name");
+        }
+        if (price == null || price < 0) {
+            throw InvalidInputException.forNegativePrice(price);
+        }
+        
+        try {
+            Product product = productRepository.findByNameAndPrice(name, price);
+            if (product == null) {
+                throw ProductNotFoundException.forNameAndPrice(name, price);
+            }
+            return product;
+        } catch (ProductNotFoundException | InvalidInputException e) {
+            throw e;
+        } catch (Exception e) {
+            throw DatabaseOperationException.forQueryFailure("findByNameAndPrice", e);
+        }
     }
 
     /**
@@ -64,9 +109,21 @@ public class ProductService {
      * 
      * @param price The price to search for
      * @return List of products with the specified price
+     * @throws InvalidInputException if price is null or negative
+     * @throws DatabaseOperationException if database operation fails
      */
     public List<Product> findByPrice(Double price){
-        return productRepository.findByPrice(price);
+        if (price == null || price < 0) {
+            throw InvalidInputException.forNegativePrice(price);
+        }
+        
+        try {
+            return productRepository.findByPrice(price);
+        } catch (InvalidInputException e) {
+            throw e;
+        } catch (Exception e) {
+            throw DatabaseOperationException.forQueryFailure("findByPrice", e);
+        }
     }
 
     /**
@@ -74,9 +131,21 @@ public class ProductService {
      * 
      * @param price The minimum price threshold
      * @return List of products with price greater than the specified value
+     * @throws InvalidInputException if price is null or negative
+     * @throws DatabaseOperationException if database operation fails
      */
     public List<Product> findByPriceGreaterThan(Double price) {
-        return productRepository.findByPriceGreaterThan(price);
+        if (price == null || price < 0) {
+            throw InvalidInputException.forNegativePrice(price);
+        }
+        
+        try {
+            return productRepository.findByPriceGreaterThan(price);
+        } catch (InvalidInputException e) {
+            throw e;
+        } catch (Exception e) {
+            throw DatabaseOperationException.forQueryFailure("findByPriceGreaterThan", e);
+        }
     }
 
     /**
@@ -84,9 +153,21 @@ public class ProductService {
      * 
      * @param price The maximum price threshold
      * @return List of products with price less than the specified value
+     * @throws InvalidInputException if price is null or negative
+     * @throws DatabaseOperationException if database operation fails
      */
     public List<Product> findByPriceLessThan(Double price) {
-        return productRepository.findByPriceLessThan(price);
+        if (price == null || price < 0) {
+            throw InvalidInputException.forNegativePrice(price);
+        }
+        
+        try {
+            return productRepository.findByPriceLessThan(price);
+        } catch (InvalidInputException e) {
+            throw e;
+        } catch (Exception e) {
+            throw DatabaseOperationException.forQueryFailure("findByPriceLessThan", e);
+        }
     }
 
     /**
@@ -95,9 +176,27 @@ public class ProductService {
      * @param min The minimum price (inclusive)
      * @param max The maximum price (inclusive)
      * @return List of products within the specified price range
+     * @throws InvalidInputException if price range is invalid
+     * @throws DatabaseOperationException if database operation fails
      */
     public List<Product> findByPriceBetween(Double min, Double max) {
-        return productRepository.findByPriceBetween(min, max);
+        if (min == null || max == null) {
+            throw InvalidInputException.forEmptyParameter("price range");
+        }
+        if (min < 0 || max < 0) {
+            throw InvalidInputException.forNegativePrice(Math.min(min, max));
+        }
+        if (min > max) {
+            throw InvalidInputException.forInvalidPriceRange(min, max);
+        }
+        
+        try {
+            return productRepository.findByPriceBetween(min, max);
+        } catch (InvalidInputException e) {
+            throw e;
+        } catch (Exception e) {
+            throw DatabaseOperationException.forQueryFailure("findByPriceBetween", e);
+        }
     }
 
     /**
@@ -105,9 +204,21 @@ public class ProductService {
      * 
      * @param keyword The keyword to search for in product names
      * @return List of products whose names contain the keyword
+     * @throws InvalidInputException if keyword is null or empty
+     * @throws DatabaseOperationException if database operation fails
      */
     public List<Product> findByNameContaining(String keyword) {
-        return productRepository.findByNameContaining(keyword);
+        if (keyword == null || keyword.trim().isEmpty()) {
+            throw InvalidInputException.forEmptyParameter("keyword");
+        }
+        
+        try {
+            return productRepository.findByNameContaining(keyword);
+        } catch (InvalidInputException e) {
+            throw e;
+        } catch (Exception e) {
+            throw DatabaseOperationException.forQueryFailure("findByNameContaining", e);
+        }
     }
 
     /**
@@ -115,9 +226,21 @@ public class ProductService {
      * 
      * @param prefix The prefix to search for
      * @return List of products whose names start with the prefix
+     * @throws InvalidInputException if prefix is null or empty
+     * @throws DatabaseOperationException if database operation fails
      */
     public List<Product> findByNameStartingWith(String prefix) {
-        return productRepository.findByNameStartingWith(prefix);
+        if (prefix == null || prefix.trim().isEmpty()) {
+            throw InvalidInputException.forEmptyParameter("prefix");
+        }
+        
+        try {
+            return productRepository.findByNameStartingWith(prefix);
+        } catch (InvalidInputException e) {
+            throw e;
+        } catch (Exception e) {
+            throw DatabaseOperationException.forQueryFailure("findByNameStartingWith", e);
+        }
     }
 
     /**
@@ -125,9 +248,21 @@ public class ProductService {
      * 
      * @param suffix The suffix to search for
      * @return List of products whose names end with the suffix
+     * @throws InvalidInputException if suffix is null or empty
+     * @throws DatabaseOperationException if database operation fails
      */
     public List<Product> findByNameEndingWith(String suffix) {
-        return productRepository.findByNameEndingWith(suffix);
+        if (suffix == null || suffix.trim().isEmpty()) {
+            throw InvalidInputException.forEmptyParameter("suffix");
+        }
+        
+        try {
+            return productRepository.findByNameEndingWith(suffix);
+        } catch (InvalidInputException e) {
+            throw e;
+        } catch (Exception e) {
+            throw DatabaseOperationException.forQueryFailure("findByNameEndingWith", e);
+        }
     }
 
     /**
@@ -136,9 +271,24 @@ public class ProductService {
      * @param name The keyword to search for in product names
      * @param price The minimum price threshold
      * @return List of products matching both criteria
+     * @throws InvalidInputException if parameters are invalid
+     * @throws DatabaseOperationException if database operation fails
      */
     public List<Product> findByNameContainingAndPriceGreaterThan(String name, Double price) {
-        return productRepository.findByNameContainingAndPriceGreaterThan(name, price);
+        if (name == null || name.trim().isEmpty()) {
+            throw InvalidInputException.forEmptyParameter("name");
+        }
+        if (price == null || price < 0) {
+            throw InvalidInputException.forNegativePrice(price);
+        }
+        
+        try {
+            return productRepository.findByNameContainingAndPriceGreaterThan(name, price);
+        } catch (InvalidInputException e) {
+            throw e;
+        } catch (Exception e) {
+            throw DatabaseOperationException.forQueryFailure("findByNameContainingAndPriceGreaterThan", e);
+        }
     }
 
     /**
@@ -148,9 +298,30 @@ public class ProductService {
      * @param min The minimum price (inclusive)
      * @param max The maximum price (inclusive)
      * @return List of products matching both criteria
+     * @throws InvalidInputException if parameters are invalid
+     * @throws DatabaseOperationException if database operation fails
      */
     public List<Product> findByNameInAndPriceBetween(List<String> names, Double min, Double max) {
-        return productRepository.findByNameInAndPriceBetween(names, min, max);
+        if (names == null || names.isEmpty()) {
+            throw InvalidInputException.forEmptyList("names");
+        }
+        if (min == null || max == null) {
+            throw InvalidInputException.forEmptyParameter("price range");
+        }
+        if (min < 0 || max < 0) {
+            throw InvalidInputException.forNegativePrice(Math.min(min, max));
+        }
+        if (min > max) {
+            throw InvalidInputException.forInvalidPriceRange(min, max);
+        }
+        
+        try {
+            return productRepository.findByNameInAndPriceBetween(names, min, max);
+        } catch (InvalidInputException e) {
+            throw e;
+        } catch (Exception e) {
+            throw DatabaseOperationException.forQueryFailure("findByNameInAndPriceBetween", e);
+        }
     }
 
     /**
@@ -158,27 +329,49 @@ public class ProductService {
      * 
      * @param name The name to search for (case-insensitive)
      * @return List of products with the specified name (ignoring case)
+     * @throws InvalidInputException if name is null or empty
+     * @throws DatabaseOperationException if database operation fails
      */
     public List<Product> findByNameIgnoreCase(String name) {
-        return productRepository.findByNameIgnoreCase(name);
+        if (name == null || name.trim().isEmpty()) {
+            throw InvalidInputException.forEmptyParameter("name");
+        }
+        
+        try {
+            return productRepository.findByNameIgnoreCase(name);
+        } catch (InvalidInputException e) {
+            throw e;
+        } catch (Exception e) {
+            throw DatabaseOperationException.forQueryFailure("findByNameIgnoreCase", e);
+        }
     }
 
     /**
      * Retrieves all products ordered by price in ascending order.
      * 
      * @return List of all products sorted by price (lowest to highest)
+     * @throws DatabaseOperationException if database operation fails
      */
     public List<Product> findAllByOrderByPriceAsc() {
-        return productRepository.findAllByOrderByPriceAsc();
+        try {
+            return productRepository.findAllByOrderByPriceAsc();
+        } catch (Exception e) {
+            throw DatabaseOperationException.forQueryFailure("findAllByOrderByPriceAsc", e);
+        }
     }
 
     /**
      * Retrieves all products ordered by price in descending order.
      * 
      * @return List of all products sorted by price (highest to lowest)
+     * @throws DatabaseOperationException if database operation fails
      */
     public List<Product> findAllByOrderByPriceDesc() {
-        return productRepository.findAllByOrderByPriceDesc();
+        try {
+            return productRepository.findAllByOrderByPriceDesc();
+        } catch (Exception e) {
+            throw DatabaseOperationException.forQueryFailure("findAllByOrderByPriceDesc", e);
+        }
     }
 
     /**
@@ -186,9 +379,21 @@ public class ProductService {
      * 
      * @param keyword The keyword to search for in product names
      * @return List of matching products sorted by price (lowest to highest)
+     * @throws InvalidInputException if keyword is null or empty
+     * @throws DatabaseOperationException if database operation fails
      */
     public List<Product> findByNameContainingOrderByPriceAsc(String keyword) {
-        return productRepository.findByNameContainingOrderByPriceAsc(keyword);
+        if (keyword == null || keyword.trim().isEmpty()) {
+            throw InvalidInputException.forEmptyParameter("keyword");
+        }
+        
+        try {
+            return productRepository.findByNameContainingOrderByPriceAsc(keyword);
+        } catch (InvalidInputException e) {
+            throw e;
+        } catch (Exception e) {
+            throw DatabaseOperationException.forQueryFailure("findByNameContainingOrderByPriceAsc", e);
+        }
     }
 
     /**
@@ -197,8 +402,26 @@ public class ProductService {
      * @param minPrice The minimum price (inclusive)
      * @param maxPrice The maximum price (inclusive)
      * @return List of products within the specified price range
+     * @throws InvalidInputException if price range is invalid
+     * @throws DatabaseOperationException if database operation fails
      */
     public List<Product> searchByPriceRange(Double minPrice, Double maxPrice) {
-        return productRepository.searchByPriceRange(minPrice, maxPrice);
+        if (minPrice == null || maxPrice == null) {
+            throw InvalidInputException.forEmptyParameter("price range");
+        }
+        if (minPrice < 0 || maxPrice < 0) {
+            throw InvalidInputException.forNegativePrice(Math.min(minPrice, maxPrice));
+        }
+        if (minPrice > maxPrice) {
+            throw InvalidInputException.forInvalidPriceRange(minPrice, maxPrice);
+        }
+        
+        try {
+            return productRepository.searchByPriceRange(minPrice, maxPrice);
+        } catch (InvalidInputException e) {
+            throw e;
+        } catch (Exception e) {
+            throw DatabaseOperationException.forQueryFailure("searchByPriceRange", e);
+        }
     }
 }
