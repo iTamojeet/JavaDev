@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * Service layer for Product entity providing business logic operations.
- * <p>
+ *
  * This service class acts as an intermediary between the controller and repository layers,
  * encapsulating business logic and providing a clean API for product-related operations.
  * The service delegates data access operations to the ProductRepository while potentially

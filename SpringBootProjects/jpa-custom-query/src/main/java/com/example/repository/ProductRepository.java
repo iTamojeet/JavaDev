@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Repository interface for Product entity providing data access operations.
- * <p>
+ *
  * This repository extends JpaRepository to inherit basic CRUD operations and
  * demonstrates various Spring Data JPA query methods including:
  * - Method name-based queries (Spring Data JPA naming conventions)
