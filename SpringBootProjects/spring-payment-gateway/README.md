@@ -106,16 +106,9 @@ properties.put(Environment.JAKARTA_JDBC_USER, "c##scott");
 properties.put(Environment.JAKARTA_JDBC_PASSWORD, "tiger");
 ```
 
-#### For Mac:
-```java
-properties.put(Environment.JAKARTA_JDBC_URL, "jdbc:oracle:thin:@//localhost:1521/XEPDB1");
-properties.put(Environment.JAKARTA_JDBC_USER, "c##scott");
-properties.put(Environment.JAKARTA_JDBC_PASSWORD, "tiger");
-```
-
 #### Using Docker (Recommended for Mac):
 ```java
-properties.put(Environment.JAKARTA_JDBC_URL, "jdbc:oracle:thin:@//localhost:1521/XE");
+properties.put(Environment.JAKARTA_JDBC_URL, "jdbc:oracle:thin:@//localhost:1521/XEPDB1");
 properties.put(Environment.JAKARTA_JDBC_USER, "c##scott");
 properties.put(Environment.JAKARTA_JDBC_PASSWORD, "tiger");
 ```
