@@ -1,0 +1,10 @@
+insert into studentautoinserted (roll, name, degree) values (1, 'tamo', 'btech');
+insert into studentautoinserted (roll, name, degree) values (2, 'soup', 'bca');
+insert into studentautoinserted (roll, name, degree) values (3, 'annwesha', 'bca');
+insert into studentautoinserted (roll, name, degree) values (4, 'aditya', 'bca');
+insert into studentautoinserted (roll, name, degree) values (5, 'tom', 'btech');
+insert into studentautoinserted (roll, name, degree) values (6, 'priyo', 'btech');
+insert into studentautoinserted (roll, name, degree) values (7, 'trisha', 'btech');
+insert into studentautoinserted (roll, name, degree) values (8, 'kushal da', 'btech');
+insert into studentautoinserted (roll, name, degree) values (9, 'rishin da', 'btech');
+insert into studentautoinserted (roll, name, degree) values (10, 'sayantani', 'btech');
