@@ -401,7 +401,7 @@ class Streams{
         System.out.println("Result: " + evenNumbers);
     }
 
-        // 41. How to use parallel streams?
+    // 41. How to use parallel streams?
     public static void example41() {
         System.out.println("\n41. How to use parallel streams?");
         List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
