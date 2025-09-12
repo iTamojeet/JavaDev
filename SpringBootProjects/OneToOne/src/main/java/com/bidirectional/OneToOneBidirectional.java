@@ -19,6 +19,7 @@ public class OneToOneBidirectional implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
         Order order = new Order();
         order.setOrderName("table");
         order.setOrderPrice(1000.00);
@@ -30,6 +31,6 @@ public class OneToOneBidirectional implements CommandLineRunner {
         order.setAddress(address);
         address.setOrder(order);
 
-        addressRepository.save(address);
+        addressRepository.save(address); // saves both
     }
 }

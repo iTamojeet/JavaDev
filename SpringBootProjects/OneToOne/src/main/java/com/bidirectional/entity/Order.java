@@ -18,7 +18,6 @@ public class Order {
     private Integer orderId;
     private String orderName;
     private Double orderPrice;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "amarbari", referencedColumnName = "addressId")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
     private Address address;
 }

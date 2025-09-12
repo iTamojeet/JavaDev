@@ -18,8 +18,8 @@ public class Address {
     private Integer addressId;
     private String city;
     private String state;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
-    @JoinColumn(name = "amrorder", referencedColumnName = "orderId")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id", referencedColumnName = "orderId")
     private Order order;
 
 }
