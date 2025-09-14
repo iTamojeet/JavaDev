@@ -4,7 +4,7 @@ import com.bidirectional.entity.Order;
 import com.bidirectional.entity.OrderItem;
 import com.bidirectional.repository.OrderRepository;
 import com.bidirectional.repository.OrderItemRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,12 +12,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.HashSet;
 import java.util.Set;
 
+@AllArgsConstructor
 @SpringBootApplication
 public class OneToManyBiApplication implements CommandLineRunner {
 
-    @Autowired
     private OrderRepository orderRepository;
-    @Autowired
     private OrderItemRepository orderItemRepository;
 
     public static void main(String[] args) {
