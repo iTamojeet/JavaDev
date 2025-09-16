@@ -1,3 +1,7 @@
+/*
+Swapping two numbers using bit-wise XOR
+*/
+
 import java.util.*;
 
 class Swap{
@@ -12,7 +16,3 @@ class Swap{
         System.out.println("a: "+a+", b: "+b);
     }
 }
-
-/*
-Swapping two numbers using bit-wise XOR
-*/
