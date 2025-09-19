@@ -1,5 +1,5 @@
 void main() {
-    var order = new Order();
+    Order order = new Order();
     int choice;
 
     do {

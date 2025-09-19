@@ -1,6 +1,6 @@
 public class SortByPrice implements java.util.Comparator<Item> {
     @Override
-    public int compare(Item o1, Item o2) {
-        return Double.compare(o1.price(), o2.price());
+    public int compare(Item a, Item b) {
+        return Double.compare(a.getPrice(), b.getPrice());
     }
 }

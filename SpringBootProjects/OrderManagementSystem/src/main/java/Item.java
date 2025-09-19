@@ -1,21 +1,32 @@
-class Item {
+public class Item {
     private final int id;
     private final String name;
     private final double price;
 
-    Item(int id, String name, double price) {
+    public Item(int id, String name, double price) {
         this.id = id;
         this.name = name;
         this.price = price;
     }
 
-    int id() { return id; }
-    String name() { return name; }
-    double price() { return price; }
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof Item i && i.id == this.id;
+        if (this == obj) return true;
+        if (!(obj instanceof Item)) return false;
+        Item i = (Item) obj;
+        return i.id == this.id;
     }
 
     @Override
@@ -25,6 +36,6 @@ class Item {
 
     @Override
     public String toString() {
-        return id + " | " + name + " | ₹" + price;
+        return id + " " + name + " " + price;
     }
 }

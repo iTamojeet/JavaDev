@@ -1,6 +1,6 @@
 void main() {
     try {
-        var order = new Order();
+        Order order = new Order();
 
         order.addItem(new Item(201, "Tshirt", 499));
         order.addItem(new Item(202, "Wallet", 1499));

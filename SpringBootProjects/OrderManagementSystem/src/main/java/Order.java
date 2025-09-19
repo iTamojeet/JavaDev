@@ -13,7 +13,7 @@ class Order {
 
     String searchItem(String name) {
         for (var item : items) {
-            if (item.name().equalsIgnoreCase(name)) {
+            if (item.getName().equalsIgnoreCase(name)) {
                 return "Found: " + item;
             }
         }
@@ -23,7 +23,7 @@ class Order {
     void updateItem(int id, String newName, double newPrice) {
         Item toUpdate = null;
         for (var item : items) {
-            if (item.id() == id) {
+            if (item.getId() == id) {
                 toUpdate = item;
                 break;
             }
@@ -35,14 +35,14 @@ class Order {
     }
 
     void deleteItem(int id) {
-        items.removeIf(item -> item.id() == id);
+        items.removeIf(item -> item.getId() == id);
     }
 
     java.util.List<Item> getSortedItemsByName() {
         var sorted = new java.util.ArrayList<>(items);
         for (var i = 0; i < sorted.size(); i++) {
             for (var j = i + 1; j < sorted.size(); j++) {
-                if (sorted.get(i).name().compareToIgnoreCase(sorted.get(j).name()) > 0) {
+                if (sorted.get(i).getName().compareToIgnoreCase(sorted.get(j).getName()) > 0) {
                     var temp = sorted.get(i);
                     sorted.set(i, sorted.get(j));
                     sorted.set(j, temp);
@@ -56,7 +56,7 @@ class Order {
         var sorted = new java.util.ArrayList<>(items);
         for (var i = 0; i < sorted.size(); i++) {
             for (var j = i + 1; j < sorted.size(); j++) {
-                if (sorted.get(i).price() > sorted.get(j).price()) {
+                if (sorted.get(i).getPrice() > sorted.get(j).getPrice()) {
                     var temp = sorted.get(i);
                     sorted.set(i, sorted.get(j));
                     sorted.set(j, temp);
