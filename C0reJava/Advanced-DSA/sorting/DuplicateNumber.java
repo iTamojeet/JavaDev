@@ -1,5 +1,8 @@
 import java.util.*;
 
+// https://leetcode.com/problems/find-the-duplicate-number/?envType=problem-list-v2&envId=array
+// Amazon
+
 class DuplicateNumber{
     public static void main(String ...args){
         int[] arr = {1,3,4,2,2};
