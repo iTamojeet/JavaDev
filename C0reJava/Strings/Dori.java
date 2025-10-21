@@ -25,4 +25,11 @@ void main(){
     // int will be converted to Integer that will call toString()
     // this is same as after a few steps: "A" + "999"
     IO.println("A" + 999);
+
+    String name = "Tamo";
+    IO.println(name.toLowerCase());
+    IO.println(name); // will not change original object
+    StringBuilder builder = new StringBuilder("Tamojeet");
+    IO.println(builder.reverse());
+    IO.println(builder); // will change original object
 }
