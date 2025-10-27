@@ -33,9 +33,9 @@ public class SecurityConfig {
                 .password(bCryptPasswordEncoder().encode("igloo"))
                 .roles("USER")
                 .build();
-        UserDetails koyel = User.builder()
-                .username("koyel")
-                .password(bCryptPasswordEncoder().encode("netaji"))
+        UserDetails ann = User.builder()
+                .username("ann")
+                .password(bCryptPasswordEncoder().encode("hati"))
                 .roles("ADMIN")
                 .build();
         UserDetails gandu = User.builder()
@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .password(bCryptPasswordEncoder().encode("mango"))
                 .roles("ADMIN")
                 .build();
-        return new InMemoryUserDetailsManager(tamo, koyel, gandu);
+        return new InMemoryUserDetailsManager(tamo, ann, gandu);
     }
     @Bean
     public static BCryptPasswordEncoder bCryptPasswordEncoder() {

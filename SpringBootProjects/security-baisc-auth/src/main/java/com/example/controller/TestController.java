@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 public class TestController {
+
     @GetMapping
     public String testing(){
         return "<h1>Spring Boot Security Testing</h1>";
     }
+
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public Student createStudent(@RequestBody Student student){
