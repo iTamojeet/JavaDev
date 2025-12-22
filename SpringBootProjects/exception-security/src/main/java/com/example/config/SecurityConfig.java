@@ -16,9 +16,10 @@ public class SecurityConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) {
         http.authorizeHttpRequests((requests) -> requests
                 .anyRequest()
-                //.authenticated()
+                .authenticated()
                 //.permitAll()
-                .denyAll());
+                //.denyAll()
+        );
         http.formLogin(withDefaults());
         http.httpBasic(withDefaults());
         return http.build();
