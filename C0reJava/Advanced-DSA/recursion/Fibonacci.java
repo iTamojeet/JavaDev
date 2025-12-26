@@ -1,7 +1,14 @@
 public class Fibonacci {
     public static void main(String[] args) {
         // Print the 4th Fibonacci number
-        IO.println(fibo(4)); 
+        IO.println(fibo(4));
+        IO.println("-".repeat(60));
+        IO.println("4th Fibo number is: "+fiboFormula(4));
+    }
+
+    static int fiboFormula(int n){
+        // just for demo use long instead
+        return (int)(Math.pow(((1 + Math.sqrt(5)) / 2), n) / Math.sqrt(5));
     }
 
     static int fibo(int n) {
