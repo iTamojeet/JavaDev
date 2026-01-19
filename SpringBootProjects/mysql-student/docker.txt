@@ -1,0 +1,38 @@
+docker network create mysql-student-network
+
+
+docker network ls
+
+
+docker run -d \
+  --name mysql-docker \
+  --network mysql-student-network \
+  -e MYSQL_ROOT_PASSWORD=garden \
+  -e MYSQL_DATABASE=dockerdb \
+  -p 3306:3306 \
+  mysql:latest
+
+
+docker ps
+
+
+mvn clean package -DskipTests
+
+
+docker build -t mysql-student-app .
+
+
+docker images
+
+
+docker run -d \
+  --name mysql-student \
+  --network mysql-student-network \
+  -p 8888:8888 \
+  -e SPRING_PROFILES_ACTIVE=docker \
+  mysql-student-app
+
+
+docker ps
+
+docker logs -f mysql-student
