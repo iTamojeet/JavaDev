@@ -1,0 +1,1 @@
+Explain {topic} and {exp} in different programming languages.
