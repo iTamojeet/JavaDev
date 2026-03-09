@@ -1,3 +1,4 @@
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 class test12 implements Predicate<Integer>{
@@ -11,5 +12,17 @@ class test12 implements Predicate<Integer>{
 
         Predicate<Integer> pp = (x)->x>100?true:false;
         IO.println(pp.test(100));;
+    }
+}
+
+class Aaram{
+    static boolean haram(Predicate<Integer> pr, Integer i){
+        return pr.test(i);
+    }
+    public static void main(String[] args) {
+        IO.println(haram(x->x>100?true:false,100));
+
+        Consumer<String> c = (q)->IO.println(q);
+        c.accept("Tamo");
     }
 }
