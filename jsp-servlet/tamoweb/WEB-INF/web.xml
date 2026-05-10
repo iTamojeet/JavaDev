@@ -1,0 +1,27 @@
+<web-app>
+
+<servlet>
+    <servlet-name>tamo</servlet-name>
+    <servlet-class>com.example.Test</servlet-class>
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>tamo</servlet-name>
+    <url-pattern>/api</url-pattern>
+</servlet-mapping>
+<!--
+<servlet>
+    <servlet-name>mango</servlet-name>
+    <servlet-class>com.example.Info</servlet-class>
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>mango</servlet-name>
+    <url-pattern>/mango</url-pattern>
+</servlet-mapping>
+-->
+<welcome-file-list>
+    <welcome-file>home.html</welcome-file>
+</welcome-file-list>
+
+</web-app>
