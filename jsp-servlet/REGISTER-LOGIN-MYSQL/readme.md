@@ -1,0 +1,1 @@
+javac -cp ".:WEB-INF/lib/*" -d WEB-INF/classes src/*.java

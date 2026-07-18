@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register</title>
+
+<style>
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background:#f0f2f5;
+}
+
+.container{
+    width:400px;
+    margin:60px auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 0 15px gray;
+}
+
+h2{
+    text-align:center;
+}
+
+input,textarea{
+    width:100%;
+    padding:10px;
+    margin-top:8px;
+    margin-bottom:15px;
+    border-radius:5px;
+    border:1px solid gray;
+    box-sizing:border-box;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#2196F3;
+    color:white;
+    border:none;
+    border-radius:5px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1565C0;
+}
+
+a{
+    text-decoration:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>User Registration</h2>
+
+<form action="register" method="post">
+
+<input
+type="number"
+name="id"
+placeholder="Enter ID"
+required>
+
+<input
+type="text"
+name="name"
+placeholder="Enter Name"
+required>
+
+<input
+type="email"
+name="email"
+placeholder="Enter Email"
+required>
+
+<input
+type="password"
+name="password"
+placeholder="Enter Password"
+required>
+
+<textarea
+name="address"
+rows="4"
+placeholder="Enter Address"
+required></textarea>
+
+<button type="submit">
+Register
+</button>
+
+</form>
+
+<br>
+
+<center>
+Already registered?
+<a href="login.html">Login</a>
+</center>
+
+</div>
+
+</body>
+</html>
