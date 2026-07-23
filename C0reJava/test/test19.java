@@ -1,6 +1,6 @@
 import java.util.*;
 class Test19{
-    public static void main(String[] args) {
+    public static void main(String[] args) throws java.lang.Throwable {
         List<Object> list = new ArrayList<>();
         Collection<Object> coll = new LinkedList<>();
         coll=new Vector<>();
