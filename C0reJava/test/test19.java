@@ -13,5 +13,10 @@ class Test19{
         // map = new AbstractMap<>();
         // map = new EnumMap<>();
         map = new HashMap<>();
+        IO.println(map.getClass());
+        IO.println(coll.getClass());
+    }
+    public static void main(String args) {
+        
     }
 }
