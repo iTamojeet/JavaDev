@@ -290,6 +290,8 @@ public class LL {
         list.display();
         list.bubbleSort();
         list.display();
+        list.insertRec(10, 0);
+        list.display();
 
     }
 
