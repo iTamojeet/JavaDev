@@ -1,11 +1,20 @@
 import java.lang.annotation.Annotation;
 
-class Test21 {
-    public static void main(String[] args) {
+class Test {
+    public static void main(String[] args) throws Exception {
         char c = 'a';
         String s = ""+c;
         IO.println(s);
         A.aa();
+
+        int i = Integer.parseInt(args[0]);
+        switch(i){
+            case 10,20,30:IO.println(i); break;
+            case 40:IO.println(i); break;
+            case 50,60,70:IO.println(i); break;
+            default:throw new Exception();
+        }
+        IO.println("-".repeat(10)); //unreachable statement
     }
 }
 
@@ -39,6 +48,6 @@ final class Client1 extends Loan{
     }
 }
 
-public abstract interface test21 {
+abstract interface Test21 {
      
 }
