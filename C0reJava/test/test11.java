@@ -1,4 +1,4 @@
-class test11 extends F implements SS{
+class Test11 extends F implements SS{
     public void a(){}
     public void a(int i){}
     public static void main(String[] args) {

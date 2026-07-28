@@ -1,5 +1,5 @@
-class test10 {
-    test10(int ...args) throws Custom{
+class Test10 {
+    Test10(int ...args) throws Custom{
         if(args.length<1){
             throw new Custom("args must not be 0 or null");
         }
@@ -10,7 +10,7 @@ class test10 {
     }
     public static void main(String ...args) throws Custom{
         int[] i={};
-        new test10(i);
+        new Test10(i);
     }
 }
 class Custom extends Exception{

@@ -3,18 +3,18 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-class test8 implements A,B{
+class Test8 implements A,B{
     @Override
     public void abc(){
         System.out.println("Hi");
         return;
     }
     public static void main(String[] args) {
-        test8 t = new test8();
+        Test8 t = new Test8();
         t.abc();
-        A a = new test8();
+        A a = new Test8();
         a.abc();
-        B b = new test8();
+        B b = new Test8();
         b.abc();
 
         IO.println("-".repeat(69));

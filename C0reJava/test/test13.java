@@ -1,4 +1,4 @@
-class test13 implements Runnable {
+class Test13 implements Runnable {
     public void run() {
         for (int i = 0; i < 5; i++) {
             try {
@@ -13,7 +13,7 @@ class test13 implements Runnable {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        test13 t = new test13();
+        Test13 t = new Test13();
         Thread t1 = new Thread(t, "Tamo Thread");
         // t1.setName("Tamo Thread");
         t1.start();

@@ -1,4 +1,4 @@
-class test7 {
+class Test7 {
     public static void main(String[] args) {
         //for(;;)
         System.out.println("JAVA version "+System.getProperty("java.version"));

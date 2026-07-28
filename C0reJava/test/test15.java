@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
-class test15 {
+class Test15 {
     // High Order function has any number of anonymous or lambda function in it's
     // parameter.
     static void highOrder(List<Integer> nums, Predicate<Integer> predicate) {

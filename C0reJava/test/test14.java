@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class test14 {
+class Test14 {
     
     int s;
     String n;
@@ -14,8 +14,8 @@ class test14 {
         // public int ha = 10;
 
         // test14 test14=80;
-        test14 test14=null;
-        test14 _dhur=new test14();
+        Test14 test14=null;
+        Test14 _dhur=new Test14();
         System.out.println(test14);
         System.out.println(_dhur);
 

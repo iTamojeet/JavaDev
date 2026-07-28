@@ -12,7 +12,7 @@ class Square implements Figure{
         IO.println("Square");
     }
 }
-class test9{
+class Test9{
     void main(){
         call(()->new Rectangle().draw());
         call(()->new Square().draw());
