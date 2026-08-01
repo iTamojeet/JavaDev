@@ -1,3 +1,10 @@
+import java.util.function.Function;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+import java.util.function.BiPredicate;
+import java.util.function.Consumer;
+import java.util.function.BiConsumer;
+
 class Test {
     private class Inner{}
     protected class Another{}
@@ -10,6 +17,10 @@ class Test {
         IO.println(0/0.0); //NaN
         IO.println(0/1.0); //0.0
         IO.println(2.2/0.0); //Infinity
+        IO.println("=".repeat(10));
+
+        Function<Integer, String> eo = (x) -> x%2==0 ? "even" : "odd";
+        IO.println(eo.apply(10));
     }
 }
 
