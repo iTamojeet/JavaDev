@@ -1,6 +1,7 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+// Java is robust - exception handling and garbage collection.
 class Test24 {
 
     public Test24(){}
