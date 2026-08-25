@@ -100,6 +100,10 @@ class Test15 {
 @FunctionalInterface
 interface Greeting {
     void greet(String message);
+    default void print() {}
+    static void log() {}
+    @Override
+    String toString();
 }
 
 sealed abstract class A permits L1,L2{
