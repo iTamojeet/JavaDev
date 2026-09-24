@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.Random;
 
 public class Test26 {
@@ -6,6 +7,9 @@ public class Test26 {
 
         String sentence = "hi.  hi hihi    -   hi  hi hi    hi.";
         IO.println(sentence.replaceAll("\\s",""));
+
+        DecimalFormat df = new DecimalFormat("0.00000");
+        IO.println(df.format(0.777776));
     }
 }
 
